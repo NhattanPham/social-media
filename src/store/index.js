@@ -6,7 +6,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 function muLoggerMiddleware(store){
     return function(next){
         return function(action){
-            console.log(1)
+            // console.log('store',store)
             next(action)
         }
     }
