@@ -1,9 +1,8 @@
-import baseApi from "./base";
-import axios from "axios"
+import api from "./base"
 
 export function login(payload) {
-    return axios.post('/login', payload)
+    return api.post('/signin', payload)
 }
 export function register(payload) {
-    return axios.post('/register', payload)
+    return api.post('/register', payload)
 }

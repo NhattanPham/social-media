@@ -1,16 +1,19 @@
 import * as types from './AuthAcionTypes'
 import { login as loginApi, register as registerApi } from '../../services'
 
-const loginAction = (payload) = async (dispatch) => {
+const loginAction = (payload) => async (dispatch) => {
     try {
         dispatch({
             type: types.LOGIN_REQUEST
         })
         const result = await loginApi(payload);
-        if (result.status === 201) {
+        console.log('result',result)
+        if (result.status === 200) {
+            const {data:{accessToken,user}} = result
+            localStorage.setItem('token',accessToken)
             dispatch({
                 type: types.LOGIN_SUCCESS,
-                payload: result.data
+                payload: user
             })
         }
     } catch (error) {
@@ -21,7 +24,7 @@ const loginAction = (payload) = async (dispatch) => {
     }
 
 }
-const registerAction = (payload) = async (dispatch) => {
+const registerAction = (payload) => async (dispatch) => {
     try {
         dispatch({
             type: types.REGISTER_REQUEST
@@ -40,7 +43,11 @@ const registerAction = (payload) = async (dispatch) => {
         })
     }
 }
+const logoutAction = ()=>{
+    localStorage.removeItem('token')
+}
 export {
     loginAction,
-    registerAction
+    registerAction,
+    logoutAction
 }

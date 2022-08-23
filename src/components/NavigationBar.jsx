@@ -6,8 +6,12 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
+import {useSelector} from 'react-redux'
+import {logoutAction} from '../store/auth/AuthAction'
 
 function NavigationBar() {
+    const {user} = useSelector(state=>state.auth)
+    console.log(user)
     return (
         <Navbar bg="light" expand="lg">
             <Container fluid>
@@ -31,11 +35,21 @@ function NavigationBar() {
                         <Button variant="outline-primary"><FaSearch/></Button>
                        
                     </Nav>
-                    <Form className="d-flex">
+                    <p>{user&&user.email}</p>
+                    {user?(<Form className="d-flex">
+                        {/* <Link to={'/login'}> */}
+                            <Button variant="outline-primary" onClick={logoutAction}>Logout</Button>
+                        {/* </Link> */}
+                    </Form>):(<Form className="d-flex">
                         <Link to={'/login'}>
                             <Button variant="outline-primary">Login</Button>
                         </Link>
-                    </Form>
+                    </Form>)}
+                    {/* <Form className="d-flex">
+                        <Link to={'/login'}>
+                            <Button variant="outline-primary">Login</Button>
+                        </Link>
+                    </Form> */}
                 </Navbar.Collapse>
             </Container>
         </Navbar>
