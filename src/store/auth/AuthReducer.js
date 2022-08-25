@@ -18,11 +18,8 @@ export default function authReducer(state=initvalue,{type,payload}){
             }
         case types.LOGIN_REQUEST:
         case types.REGISTER_REQUEST:
-            return{
-                ...state,
-                loading:false,
-                error:null,
-            }
+        case types.LOGOUT:
+            return initvalue;
         case types.LOGIN_SUCCESS:
             return{
                 ...state,
