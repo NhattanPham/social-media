@@ -6,14 +6,19 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {logoutAction} from '../store/auth/AuthAction'
 
 function NavigationBar() {
     const {user} = useSelector(state=>state.auth)
-    console.log(user)
+    const dispatch = useDispatch()
+    console.log("user",user)
+    const handleLogout = ()=>{
+        dispatch(logoutAction())
+    }
+   
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar style={{padding:'8px 100px'}} bg="light" expand="lg">
             <Container fluid>
                 <Link style={{textDecoration:'none'}} to={'/'}>
                     <Navbar.Brand href="#">Logo</Navbar.Brand>
@@ -25,7 +30,6 @@ function NavigationBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        {/* <Nav.Link href="#action1">Home</Nav.Link> */}
                         <Form.Control
                             type="search"
                             placeholder="Search"
@@ -35,21 +39,18 @@ function NavigationBar() {
                         <Button variant="outline-primary"><FaSearch/></Button>
                        
                     </Nav>
-                    <p>{user&&user.email}</p>
-                    {user?(<Form className="d-flex">
+                    <div className='d-flex p-2 align-items-center'>
+                    <div ><Link to={`/profile/${user.id}`} style={{color:'#000',textDecoration:'none'}}>{user&&user.email}</Link></div>
+                    {user!==null?(<Form className="d-flex">
                         {/* <Link to={'/login'}> */}
-                            <Button variant="outline-primary" onClick={logoutAction}>Logout</Button>
+                            <Button variant="outline-primary" onClick={handleLogout}>Logout</Button>
                         {/* </Link> */}
                     </Form>):(<Form className="d-flex">
                         <Link to={'/login'}>
                             <Button variant="outline-primary">Login</Button>
                         </Link>
                     </Form>)}
-                    {/* <Form className="d-flex">
-                        <Link to={'/login'}>
-                            <Button variant="outline-primary">Login</Button>
-                        </Link>
-                    </Form> */}
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

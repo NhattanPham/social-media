@@ -6,8 +6,10 @@ import Register from './pages/Register';
 import NavigationBar from './components/NavigationBar';
 import Container from 'react-bootstrap/esm/Container';
 import Profile from './pages/Profile';
+// import {useSelector} from 'react-redux'
 
 function App() {
+  // const {user} = useSelector(state=>state.auth);
   return (
     <div>
       <NavigationBar/>
@@ -16,7 +18,7 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
-        <Route path='/profile' element={<Profile/>}/>
+        <Route path='/profile/:id' element={<Profile/>}/>
       </Routes>
       </Container>
     </div>

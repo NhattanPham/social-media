@@ -10,6 +10,7 @@ const loginAction = (payload) => async (dispatch) => {
         console.log('result',result)
         if (result.status === 200) {
             const {data:{accessToken,user}} = result
+            // console.log('token',accessToken)
             localStorage.setItem('token',accessToken)
             dispatch({
                 type: types.LOGIN_SUCCESS,
@@ -43,7 +44,12 @@ const registerAction = (payload) => async (dispatch) => {
         })
     }
 }
-const logoutAction = ()=>{
+const logoutAction = ()=>(dispatch)=>{
+    dispatch({
+        type:types.LOGOUT,
+        
+    })
+    console.log(1)
     localStorage.removeItem('token')
 }
 export {

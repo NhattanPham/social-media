@@ -11,4 +11,5 @@ function muLoggerMiddleware(store){
         }
     }
 }
-export default createStore(allReducer,composeWithDevTools(applyMiddleware(thunk,muLoggerMiddleware)))
+export default createStore(allReducer,
+    composeWithDevTools(applyMiddleware(thunk,muLoggerMiddleware)))
