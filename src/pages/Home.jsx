@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { loadPostsAction } from '../store/posts/PostAction'
 import { getLikeByuserAction } from '../store/like/LikeAction'
 import { useDispatch, useSelector,shallowEqual } from 'react-redux'
 import Post from '../components/Post'
 
 function Home() {
-  const { loadding, posts, error } = useSelector(state => state.posts,shallowEqual)
+  const { posts } = useSelector(state => state.posts,shallowEqual)
   const {likeData} = useSelector(state=>state.like)
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
@@ -14,7 +14,8 @@ function Home() {
     if(user)
     dispatch(getLikeByuserAction(user.id))
     
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
   useEffect(()=>{ 
   
   },[likeData])
