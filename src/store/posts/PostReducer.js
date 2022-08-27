@@ -2,7 +2,7 @@ import * as types from './PostActionTypes'
 
 const initvalue = {
     loadding:true,
-    posts:[],
+    posts:null,
     error:null,
 
 }

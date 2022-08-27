@@ -1,38 +1,30 @@
-import React, { useEffect } from 'react'
-import styles from './Home.module.css'
-import { BiLike } from 'react-icons/bi'
-import { BsChatRightText } from 'react-icons/bs'
+import React, { useEffect, useState } from 'react'
 import { loadPostsAction } from '../store/posts/PostAction'
-import { useDispatch, useSelector } from 'react-redux'
+import { checkLikeAction } from '../store/like/LikeAction'
+import { useDispatch, useSelector,shallowEqual } from 'react-redux'
+import Post from '../components/Post'
 
 function Home() {
-  const { loadding, posts, error } = useSelector(state => state.posts)
+  const { loadding, posts, error } = useSelector(state => state.posts,shallowEqual)
+  const {likeData} = useSelector(state=>state.like)
+  const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadPostsAction())
+    dispatch(checkLikeAction())
   }, [])
-  console.log(posts)
+  useEffect(()=>{ 
+  
+  },[likeData!==null])
+  console.log("Outside",posts)
+  console.log("Like data",likeData)
   return (
     <div>
       {posts && posts.map(post=>
-        <div className={`${styles.post} col-md-6 col-xs-12 text-dark`}>
-        <div className='d-flex p-2 align-items-center'>
-          <img
-            src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
-            alt="Not found"
-            className={styles.avatar}
-          />
-          <h3>{post.user.name}</h3>
-        </div>
-        <div className={styles.content}>
-        <p>{post.body}</p>
-        <img src="https://via.placeholder.com/600/92c952" alt="" />
-        </div>
-        <div className={`${styles.action} d-flex justify-content-around`}>
-          <div className='btn col-6'><BiLike />Like</div>
-          <div className='btn col-6'><BsChatRightText />Comment</div>
-        </div>
-      </div>)}
+      <div key={post.id}>
+      {likeData&& <Post  post={post} likes={likeData}/>}
+      </div>
+      )}
     </div>
   )
 }
