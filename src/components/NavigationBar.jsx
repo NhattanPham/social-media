@@ -40,7 +40,8 @@ function NavigationBar() {
                        
                     </Nav>
                     <div className='d-flex p-2 align-items-center'>
-                    <div ><Link to={`/profile/${user.id}`} style={{color:'#000',textDecoration:'none'}}>{user&&user.email}</Link></div>
+                    {user&& <div ><Link to={`/profile/${user.id}`} style={{color:'#000',textDecoration:'none',padding:'0 20px'}}>{user.email}</Link></div>}
+                    
                     {user!==null?(<Form className="d-flex">
                         {/* <Link to={'/login'}> */}
                             <Button variant="outline-primary" onClick={handleLogout}>Logout</Button>
