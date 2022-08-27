@@ -3,7 +3,7 @@ import styles from './Post.module.css'
 import { BiLike } from 'react-icons/bi'
 import { BsChatRightText } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
-import {checkLikeAction, createLikeAction, deleteLikeAction } from '../store/like/LikeAction'
+import { createLikeAction, deleteLikeAction } from '../store/like/LikeAction'
 
 function Post({ post,likes }) {
   const [showComment, setShowComment] = useState(false)
@@ -16,21 +16,15 @@ function Post({ post,likes }) {
       setLikeDataC(likes.filter(item=> item.userId=== user.id && item.postId === post.id)[0])
     }
   },[])
-  //  console.log("Like",likes,post.id)
   const handleLike = (postId, userId) => {
     console.log(postId,userId)
-    // setLikeDataC({postId,userId})
     dispatch(createLikeAction({postId, userId}))
-    if(likes!==null)
-    setLikeDataC(likes.filter(item=> item.userId=== user.id && item.postId === post.id)[0])
-    // console.log(post)
-    // dispatch(checkLikeAction())
+    // if(likes!==null)
+    // setLikeDataC(likes.filter(item=> item.userId=== user.id && item.postId === post.id)[0])
   }
   const handleUnLike = (id) => {
     dispatch(deleteLikeAction(id))
-    setLikeDataC(null)
-    // dispatch(checkLikeAction())
-    
+    // setLikeDataC(null)
   }
   return (
     <div key={post.id} className={`${styles.post} col-md-6 col-xs-12 text-dark`}>

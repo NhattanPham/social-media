@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { loadPostsAction } from '../store/posts/PostAction'
-import { checkLikeAction } from '../store/like/LikeAction'
+import { getLikeByuserAction } from '../store/like/LikeAction'
 import { useDispatch, useSelector,shallowEqual } from 'react-redux'
 import Post from '../components/Post'
 
@@ -11,12 +11,14 @@ function Home() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadPostsAction())
-    dispatch(checkLikeAction())
+    if(user)
+    dispatch(getLikeByuserAction(user.id))
+    
   }, [])
   useEffect(()=>{ 
   
-  },[likeData!==null])
-  console.log("Outside",posts)
+  },[likeData])
+  // console.log("Outside",posts)
   console.log("Like data",likeData)
   return (
     <div>

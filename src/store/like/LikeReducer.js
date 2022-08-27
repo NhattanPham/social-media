@@ -12,10 +12,12 @@ export function likeReducer(state = initValue,{type,payload}) {
         case types.FETCH_LIKE_REQUEST:
         case types.CREATE_LIKE_REQUEST:
         case types.DELETE_LIKE_REQUEST:
+        case types.FETCH_LIKEBYUSER_REQUEST:
             return initValue;
         case types.FETCH_LIKE_FAIL:
         case types.CREATE_LIKE_FAIL:
         case types.DELETE_LIKE_FAIL:
+        case types.FETCH_LIKEBYUSER_FAIL:
             return{
                 ...state,
                 error:payload
@@ -25,6 +27,12 @@ export function likeReducer(state = initValue,{type,payload}) {
                 ...state,
                 loadding:false,
                 likeData:payload,
+            }
+        case types.FETCH_LIKEBYUSER_SUCCESS:
+            return{
+                ...state,
+                loadding:false,
+                likeData:payload
             }
         case types.CREATE_LIKE_SUCCESS:
             return{
