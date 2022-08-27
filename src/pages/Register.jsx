@@ -7,13 +7,14 @@ import { useDispatch, useSelector } from 'react-redux'
 function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-    const { error, registerSuccess } = useSelector(state => state.auth)
+    const {  registerSuccess } = useSelector(state => state.auth)
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (registerSuccess)
             navigate('/login')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [registerSuccess])
 
     const handeleRegister = (e) => {

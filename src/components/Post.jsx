@@ -15,7 +15,8 @@ function Post({ post,likes }) {
       if(likes!==null)
       setLikeDataC(likes.filter(item=> item.userId=== user.id && item.postId === post.id)[0])
     }
-  },[])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[user])
   const handleLike = (postId, userId) => {
     console.log(postId,userId)
     dispatch(createLikeAction({postId, userId}))
