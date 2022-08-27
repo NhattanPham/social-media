@@ -21,7 +21,7 @@ function NavigationBar() {
         <Navbar style={{padding:'8px 100px'}} bg="light" expand="lg">
             <Container fluid>
                 <Link style={{textDecoration:'none'}} to={'/'}>
-                    <Navbar.Brand href="#">Logo</Navbar.Brand>
+                    <Navbar.Brand href="#">Logos</Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
