@@ -1,5 +1,5 @@
 import * as types from './LikeAcionTypes'
-import { checkLike ,getLikeByuser,createLike,deleteLike } from '../../services'
+import { checkLike ,createLike,deleteLike } from '../../services'
 
 const checkLikeAction = () => async (dispatch)=>{
     try {
@@ -21,23 +21,6 @@ const checkLikeAction = () => async (dispatch)=>{
         })
     }
     
-}
-const getLikeByuserAction = (userId) =>async (dispatch)=>{
-    try {
-        dispatch({type:types.FETCH_LIKEBYUSER_REQUEST})
-        const result = await getLikeByuser(userId)
-        if(result.status === 200){
-            dispatch({
-                type:types.FETCH_LIKEBYUSER_SUCCESS,
-                payload:result.data
-            })
-        }
-    } catch (error) {
-        dispatch({
-            type:types.FETCH_LIKEBYUSER_FAIL,
-            payload:error
-        })
-    }
 }
 const createLikeAction = (payload)=>async (dispatch)=>{
     try {
@@ -78,7 +61,7 @@ const deleteLikeAction = (likeId)=>async (dispatch)=>{
 }
 export {
     checkLikeAction,
-    getLikeByuserAction,
+    // getLikeByuserAction,
     createLikeAction,
     deleteLikeAction
 }
