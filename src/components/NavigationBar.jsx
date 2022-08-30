@@ -7,14 +7,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { FaSearch } from "react-icons/fa";
 import {useDispatch, useSelector} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 import {logoutAction} from '../store/auth/AuthAction'
+
 
 function NavigationBar() {
     const {user} = useSelector(state=>state.auth)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     console.log("user",user)
     const handleLogout = ()=>{
         dispatch(logoutAction())
+        navigate('/login')
     }
    
     return (

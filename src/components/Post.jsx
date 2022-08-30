@@ -25,9 +25,6 @@ function Post({ post }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, showComment])
-  // useEffect(()=>{
-  //   handleLoadComment()
-  // },[comments])
   const handleLoadComment = ()=>{
       getCommentByPost(post.id)
           .then((res) => {
@@ -67,14 +64,16 @@ function Post({ post }) {
   console.log('like data', likeData)
   console.log('Comments',comments)
   return (
-    <div key={post.id} className={`${styles.post} col-md-6 col-xs-12 text-dark`}>
+    <div className={`${styles.post} col-md-12 col-xs-12 text-dark`}>
       <div className='d-flex p-2 align-items-center'>
         <img
           src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
           alt="Not found"
           className={styles.avatar}
         />
-        <h3 style={{ margin: '0 20px' }}>{post.user.name}</h3>
+        {post.user?.name?<h3 style={{ margin: '0 20px' }}>{post.user?.name}</h3>:
+        <h3 style={{ margin: '0 20px' }}>{post.user?.email}</h3>}
+        {/* <h3 style={{ margin: '0 20px' }}>{post.user.name}</h3> */}
       </div>
       <div className={styles.content}>
         <p className={styles['content_text']}>{post.body}</p>
