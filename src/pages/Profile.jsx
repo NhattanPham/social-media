@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Post from '../components/Post'
-import { loadPostsByUser } from '../services/posts'
+import { loadPostsByUser,createPost } from '../services/posts'
 import styles from './Profile.module.css'
 
 function Profile() {
@@ -9,15 +9,25 @@ function Profile() {
   const [postsByUser, setPostsByUser] = useState([])
   useEffect(() => {
     if (user) {
-      loadPostsByUser(user.id)
+      handleLoadPosts(user.id)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  const handleLoadPosts = (userId)=>{
+    loadPostsByUser(userId)
         .then((res) => {
           if (res.status === 200) {
             setPostsByUser(res.data)
           }
         })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+        .catch(error=>console.log(error))
+  }
+  const handleAddPost = (e) => {
+    createPost({ userId: user.id, body: e.target.value })
+    handleLoadPosts(user.id)
+    e.target.value = ''
+
+  }
   return (
     <div>
       <div className={styles['avatar_cover_img']}>
@@ -51,12 +61,12 @@ function Profile() {
                 className="form-control"
                 placeholder={`What's on your mind?`}
                 aria-describedby="basic-addon1"
-              // onKeyDown={(e)=>{
-              //   if(e.key === 'Enter'){
-              //     console.log(e.target.value)
-              //     handleAddPost(e)
-              //   }
-              // }}
+              onKeyDown={(e)=>{
+                if(e.key === 'Enter'){
+                  console.log(e.target.value)
+                  handleAddPost(e)
+                }
+              }}
               />
             </div>
           </div>

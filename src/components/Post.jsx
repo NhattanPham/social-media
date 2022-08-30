@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Post.module.css'
-import { BiLike } from 'react-icons/bi'
-import { AiFillLike } from 'react-icons/ai'
+import { AiFillLike,AiOutlineLike } from 'react-icons/ai'
 import { BsChatRightText } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { getLikeByuserAndPost, createLike, deleteLike } from '../services/like'
@@ -81,7 +80,7 @@ function Post({ post }) {
       </div>
       <div className={`${styles.action} d-flex justify-content-around`}>
         {likeData ? <div className='btn col-6 text-primary' onClick={() => handleUnLike(likeData?.id)}><AiFillLike />Like</div>
-          : <div className='btn col-6' onClick={() => handleLike(post.id, user.id)}><BiLike />Like</div>}
+          : <div className='btn col-6' onClick={() => handleLike(post.id, user.id)}><AiOutlineLike />Like</div>}
         <div className='btn col-6' onClick={() => setShowComment((v) => !v)}><BsChatRightText />Comment</div>
       </div>
       {showComment === true ?
