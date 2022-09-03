@@ -3,14 +3,20 @@ import { useSelector } from 'react-redux'
 import Post from '../components/Post'
 import { loadPostsByUser,createPost } from '../services/posts'
 import styles from './Profile.module.css'
+import { useParams } from "react-router-dom";
 
 function Profile() {
   const { user } = useSelector(state => state.auth)
   const [postsByUser, setPostsByUser] = useState([])
+  const {id} = useParams()
   useEffect(() => {
-    if (user) {
+    if(user){
+    // if (user.id === id) {
       handleLoadPosts(user.id)
     }
+  // }else{
+  //   handleLoadPosts(id)
+  // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const handleLoadPosts = (userId)=>{
@@ -28,6 +34,7 @@ function Profile() {
     e.target.value = ''
 
   }
+  console.log(id)
   return (
     <div>
       <div className={styles['avatar_cover_img']}>

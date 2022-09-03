@@ -1,5 +1,8 @@
 import api from "./base"
 
+export function getUsers() {
+    return api.get('/users')
+}
 export function login(payload) {
     return api.post('/signin', payload)
 }
