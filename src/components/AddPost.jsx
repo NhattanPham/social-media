@@ -72,8 +72,8 @@ function AddPost({loadPostByUser}) {
                 />
             </div>
             <div>
-                <input type="file" onChange={handleChange} className='img' multiple />
-                <button onClick={handleUpload}>Upload</button>
+                <input  type="file" onChange={handleChange} className='img' multiple />
+                <button className='btn btn-primary' onClick={handleUpload}>Upload</button>
                 <p>{persent} "% done"</p>
                 {imageUpload !== '' && <img style={{ width: '80%' }} src={imageUpload} alt="" />}
 
