@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-    const {  registerSuccess } = useSelector(state => state.auth)
+    const {registerSuccess} = useSelector(state => state.auth)
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ function Register() {
         }))
     }
     return (
-        <div className='col-md-6 col-xs-12'>
+        <div style={{margin:'auto'}} className='col-md-6 col-xs-12'>
             <Form>
                 <h1>Register</h1>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

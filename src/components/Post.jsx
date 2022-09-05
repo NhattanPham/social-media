@@ -5,12 +5,14 @@ import { BsChatRightText } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { getLikeByuserAndPost, createLike, deleteLike } from '../services/like'
 import { getCommentByPost, createComment } from '../services/comment'
+import { useNavigate } from 'react-router-dom'
 
 function Post({ post }) {
   const [showComment, setShowComment] = useState(false)
   const [comments, setComments] = useState(null)
   const [likeData, setLikeData] = useState(null)
   const { user } = useSelector(state => state.auth)
+  const navigate = useNavigate()
   useEffect(() => {
     if (user) {
       getLikeByuserAndPost(post.id, user.id)
@@ -60,8 +62,7 @@ function Post({ post }) {
     })
     .catch(err => console.log(err))
   }
-  console.log('like data', likeData)
-  console.log('Comments',comments)
+ 
   return (
     <div className={`${styles.post} col-md-12 col-xs-12 text-dark`}>
       <div className='d-flex p-2 align-items-center'>
@@ -70,18 +71,29 @@ function Post({ post }) {
           alt="Not found"
           className={styles.avatar}
         />
-        {post.user?.name?<h3 style={{ margin: '0 20px' }}>{post.user?.name}</h3>:
-        <h3 style={{ margin: '0 20px' }}>{post.user?.email}</h3>}
+        {post.user?.name?<h3 onClick={()=>navigate(`/profile/${post.user.id}`)} style={{ margin: '0 20px',cursor: 'pointer' }}>{post.user?.name}</h3>:
+        <h3 onClick={()=>navigate(`/profile/${post.user.id}`)} style={{ margin: '0 20px',cursor: 'pointer' }}>{post.user?.email}</h3>}
         {/* <h3 style={{ margin: '0 20px' }}>{post.user.name}</h3> */}
       </div>
       <div className={styles.content}>
         <p className={styles['content_text']}>{post.body}</p>
-        <img src="https://via.placeholder.com/600/92c952" alt="" className={styles['content_img']}/>
+        {post.thumbnail? 
+        <img
+          src={post.thumbnail}
+          alt="Not found"
+          className={styles['content_img']}
+        />: 
+        <img
+        src="https://via.placeholder.com/600/92c952"
+        alt="Not found"
+        className={styles['content_img']}
+      />}
+        {/* <img src="https://via.placeholder.com/600/92c952" alt="" className={styles['content_img']}/> */}
       </div>
       <div className={`${styles.action} d-flex justify-content-around`}>
-        {likeData ? <div className='btn col-6 text-primary' onClick={() => handleUnLike(likeData?.id)}><AiFillLike />Like</div>
-          : <div className='btn col-6' onClick={() => handleLike(post.id, user.id)}><AiOutlineLike />Like</div>}
-        <div className='btn col-6' onClick={() => setShowComment((v) => !v)}><BsChatRightText />Comment</div>
+        {likeData ? <div className='btn col-6 text-primary' onClick={() => handleUnLike(likeData?.id)}><AiFillLike /> Like</div>
+          : <div className='btn col-6' onClick={() => handleLike(post.id, user.id)}><AiOutlineLike /> Like</div>}
+        <div className='btn col-6' onClick={() => setShowComment((v) => !v)}><BsChatRightText /> Comment</div>
       </div>
       {showComment === true ?
         <div className={styles.comment}>

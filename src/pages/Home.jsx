@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { loadPostsAction, createPostAction } from '../store/posts/PostAction'
+import { loadPostsAction } from '../store/posts/PostAction'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from '../components/Post'
 import styles from './Home.module.css'
+import AddPost from '../components/AddPost'
 
 function Home() {
   const { posts } = useSelector(state => state.posts)
@@ -12,47 +13,27 @@ function Home() {
     dispatch(loadPostsAction())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const handleAddPost = (e) => {
-    dispatch(createPostAction({ userId: user.id, body: e.target.value }))
-    dispatch(loadPostsAction())
-    e.target.value = ''
-
-  }
-  console.log(posts)
+  // const handleAddPost = (e) => {
+  //   dispatch(createPostAction({ userId: user.id, body: e.target.value }))
+  //   dispatch(loadPostsAction())
+  //   e.target.value = ''
+  // }
+  // console.log(posts)
   return (
     <div className='d-flex'>
-      <div className={`${styles.navigationBar} col-md-3`}>
+      <div className={`${styles.optionUser} col-md-3`}>
         <div className='d-flex'>
         <img
           style={{ width: '40px', height: '40px', borderRadius: '20px', margin: '0 20px' }}
           src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
           alt="No found" />
-          <h2>User Name</h2>
+          {user && user?.name?<h2>{user.name}</h2>:<h2>{user.email}</h2>}
           </div>
           <p>Friends</p>
           <p>Save</p>
       </div>
       <div className='d-flex flex-column col-md-6 align-items-center' align="center">
-        <div style={{ backgroundColor: 'rgb(247, 247, 247)', margin: '10px 0', padding: '10px 20px',borderRadius:'20px' }} className='col-md-12'>
-          <div className='input-group mb-3'>
-            <img
-              style={{ width: '40px', height: '40px', borderRadius: '20px', margin: '0 20px' }}
-              src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
-              alt="No found" />
-            <input
-              type="text"
-              className="form-control"
-              placeholder={`What's on your mind?`}
-              aria-describedby="basic-addon1"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  console.log(e.target.value)
-                  handleAddPost(e)
-                }
-              }}
-            />
-          </div>
-        </div>
+        <AddPost/>
         {posts && posts.map(post =>
           <Post key={post.id} post={post} />
         )}

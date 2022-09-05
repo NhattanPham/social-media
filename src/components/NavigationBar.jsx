@@ -10,14 +10,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutAction } from '../store/auth/AuthAction'
 import { getUsers } from '../services/auth'
-
+import styles from './NavigationBar.module.css'
 
 function NavigationBar() {
     const { user } = useSelector(state => state.auth)
     const [users, setUsers] = useState([])
+    const [userFilter,setUserFilter] = useState([])
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log("user", user)
+    // console.log("user", user)
     const handleLogout = () => {
         dispatch(logoutAction())
         navigate('/login')
@@ -31,11 +32,22 @@ function NavigationBar() {
             .catch(error=>console.log(error))
     },[])
     const handleSearch = (params) => {
-        console.log(users)
-        console.log(params)
+        // const userFilter = users.filter((item)=>item?.name.toLowerCase().includes(params))
+        if(params!==''){
+        const userFilterF = users.filter((item)=>{
+            if(item.name)
+            return item?.name.toLowerCase().includes(params.toLowerCase())
+            else return false
+        }
+            )
+        setUserFilter(userFilterF)
+    }else{
+        setUserFilter([])
     }
+    }
+    // console.log('User',user)
     return (
-        <Navbar style={{ padding: '8px 100px' }} bg="light" expand="lg">
+        <Navbar style={{ padding: '8px 100px',position:' relative'}} bg="light" expand="lg">
             <Container fluid>
                 <Link style={{ textDecoration: 'none' }} to={'/'}>
                     <Navbar.Brand href="#">Logos</Navbar.Brand>
@@ -58,12 +70,10 @@ function NavigationBar() {
 
                     </Nav>
                     <div className='d-flex p-2 align-items-center'>
-                        {user && <div ><Link to={`/profile/${user.id}`} style={{ color: '#000', textDecoration: 'none', padding: '0 20px' }}>{user.email}</Link></div>}
+                        {user && <div ><Link to={`/profile/${user.id}`} style={{ color: '#000', textDecoration: 'none', padding: '0 20px' }}>{user.name?user.name:user.email}</Link></div>}
 
                         {user !== null ? (<Form className="d-flex">
-                            {/* <Link to={'/login'}> */}
                             <Button variant="outline-primary" onClick={handleLogout}>Logout</Button>
-                            {/* </Link> */}
                         </Form>) : (<Form className="d-flex">
                             <Link to={'/login'}>
                                 <Button variant="outline-primary">Login</Button>
@@ -71,6 +81,13 @@ function NavigationBar() {
                         </Form>)}
                     </div>
                 </Navbar.Collapse>
+                <div className={styles.searchBox}>
+                    <ul style={{ listStyle:'none',padding:'0px' }}>
+                    {userFilter && userFilter.map(item=>(
+                        <li key={item.id} className={styles.searchBoxItemLi}><Link className={styles.searchBoxItem} to={`/profile/${item.id}`}>{item.name}</Link></li>
+                    ))}
+                    </ul>
+                </div>
             </Container>
         </Navbar>
     )

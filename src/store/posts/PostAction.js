@@ -7,7 +7,6 @@ const loadPostsAction = ()=> async (dispatch) =>{
             type:types.FETCH_POST_REQUEST
         })
         const result = await loadPosts();
-        console.log('result posts',result)
         if(result.status===200){
             dispatch({
                 type:types.FETCH_POST_SUCCESS,

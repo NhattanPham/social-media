@@ -24,7 +24,7 @@ function Login() {
         console.log('user', user, error)
     }
     return (
-        <div className='col-md-6 col-xs-12'>
+        <div style={{margin:'auto'}} className='col-md-6 col-xs-12'>
             <Form>
                 <h1>Login</h1>
                 <Form.Group className="mb-3" controlId="formBasicEmail">

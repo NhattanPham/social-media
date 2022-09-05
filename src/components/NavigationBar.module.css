@@ -1,0 +1,19 @@
+.searchBox{
+    position: absolute;
+    top: 60px;
+    left: 165px;
+    background-color: white;
+    border-radius: 20px;
+}
+.searchBoxItemLi{
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+.searchBoxItem{
+    all: unset;
+    padding: 10px 10px;
+    text-decoration: none;
+    color: black;
+    
+}
