@@ -58,7 +58,7 @@ function Profile() {
       <div className='d-flex justify-content-center'>
         <div className={`${styles.intro} col-md-3`}>
           <h3>Intro</h3>
-          {/* <p><b>Address :</b> {profile ? profile?.address:user?.address}</p> */}
+          <p><b>Address :</b> {profile ? profile?.address.city?profile?.address.city:profile?.address:user?.address}</p>
           <p><b>Phone :</b> {profile ? profile?.phone:user?.phone}</p>
           <EditUser reloadPosts={handleLoadPosts} />
         </div>

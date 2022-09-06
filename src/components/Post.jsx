@@ -127,7 +127,7 @@ function Post({ post }) {
             </div>
           )}
         </div> : null}
-
+        <div className={styles['loader-line']}></div>
     </div>
   )
 }
