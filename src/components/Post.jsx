@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Post.module.css'
-import { AiFillLike,AiOutlineLike } from 'react-icons/ai'
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
 import { BsChatRightText } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { getLikeByuserAndPost, createLike, deleteLike } from '../services/like'
@@ -22,17 +22,17 @@ function Post({ post }) {
         })
         .catch(err => console.log(err))
       if (showComment)
-      handleLoadComment()
+        handleLoadComment()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, showComment])
-  const handleLoadComment = ()=>{
-      getCommentByPost(post.id)
-          .then((res) => {
-            if (res.data)
-              setComments(res.data)
-          })
-          .catch(err => console.log(err))
+  const handleLoadComment = () => {
+    getCommentByPost(post.id)
+      .then((res) => {
+        if (res.data)
+          setComments(res.data)
+      })
+      .catch(err => console.log(err))
   }
   const handleLike = (postId, userId) => {
     createLike({ postId, userId })
@@ -50,19 +50,19 @@ function Post({ post }) {
       })
       .catch(err => console.log(err))
   }
-  const handleCreateComment = (e) =>{
-    createComment({postId:post.id,userId:user?.id,body:e.target.value})
-    .then((res)=>{
-      if(res.data){
-        console.log("res",res.data)
-        handleLoadComment()
-      e.target.value=''
-      // console.log(comments)
-    }
-    })
-    .catch(err => console.log(err))
+  const handleCreateComment = (e) => {
+    createComment({ postId: post.id, userId: user?.id, body: e.target.value })
+      .then((res) => {
+        if (res.data) {
+          console.log("res", res.data)
+          handleLoadComment()
+          e.target.value = ''
+          // console.log(comments)
+        }
+      })
+      .catch(err => console.log(err))
   }
- 
+
   return (
     <div className={`${styles.post} col-md-12 col-xs-12 text-dark`}>
       <div className='d-flex p-2 align-items-center'>
@@ -71,23 +71,23 @@ function Post({ post }) {
           alt="Not found"
           className={styles.avatar}
         />
-        {post.user?.name?<h3 onClick={()=>navigate(`/profile/${post.user.id}`)} style={{ margin: '0 20px',cursor: 'pointer' }}>{post.user?.name}</h3>:
-        <h3 onClick={()=>navigate(`/profile/${post.user.id}`)} style={{ margin: '0 20px',cursor: 'pointer' }}>{post.user?.email}</h3>}
+        {post.user?.name ? <h3 onClick={() => navigate(`/profile/${post.user.id}`)} style={{ margin: '0 20px', cursor: 'pointer' }}>{post.user?.name}</h3> :
+          <h3 onClick={() => navigate(`/profile/${post.user.id}`)} style={{ margin: '0 20px', cursor: 'pointer' }}>{post.user?.email}</h3>}
         {/* <h3 style={{ margin: '0 20px' }}>{post.user.name}</h3> */}
       </div>
       <div className={styles.content}>
         <p className={styles['content_text']}>{post.body}</p>
-        {post.thumbnail? 
-        <img
-          src={post.thumbnail}
-          alt="Not found"
-          className={styles['content_img']}
-        />: 
-        <img
-        src="https://via.placeholder.com/600/92c952"
-        alt="Not found"
-        className={styles['content_img']}
-      />}
+        {post.thumbnail ?
+          <img
+            src={post.thumbnail}
+            alt="Not found"
+            className={styles['content_img']}
+          /> :
+          <img
+            src="https://via.placeholder.com/600/92c952"
+            alt="Not found"
+            className={styles['content_img']}
+          />}
         {/* <img src="https://via.placeholder.com/600/92c952" alt="" className={styles['content_img']}/> */}
       </div>
       <div className={`${styles.action} d-flex justify-content-around`}>
@@ -98,30 +98,30 @@ function Post({ post }) {
       {showComment === true ?
         <div className={styles.comment}>
           <div className="input-group mb-3">
-            <input 
-            type="text" 
-            className="form-control"
-            placeholder="Write a comment" 
-            aria-describedby="basic-addon1"
-            onKeyDown={(e)=>{
-              if(e.key === 'Enter'){
-                console.log(e.target.value)
-                handleCreateComment(e)
-              }
-            }}
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Write a comment"
+              aria-describedby="basic-addon1"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  console.log(e.target.value)
+                  handleCreateComment(e)
+                }
+              }}
             />
           </div>
-          {comments&&comments.map((comment) =>
+          {comments && comments.map((comment) =>
             <div key={comment.id} className={styles['comment_item']}>
               <div className='d-flex align-items-center'>
                 <img src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
-                  alt="Not found" 
+                  alt="Not found"
                   className={styles['img_comment']}
-                  />
-                {comment.user.name?<div className='text-primary'>{comment.user.name}</div>:
-                <div className='text-primary'>{comment.user.email}</div>
+                />
+                {comment.user.name ? <div className='text-primary'>{comment.user.name}</div> :
+                  <div className='text-primary'>{comment.user.email}</div>
                 }
-                
+
               </div>
               <div className={styles['body_comment']}>{comment.body}</div>
             </div>

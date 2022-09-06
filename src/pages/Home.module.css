@@ -4,4 +4,6 @@
     margin: 20px;
     padding: 20px;
     border-radius:20px;
+    position: sticky;
+    top: 90px;
 }

@@ -47,7 +47,7 @@ function NavigationBar() {
     }
     // console.log('User',user)
     return (
-        <Navbar style={{ padding: '8px 100px',position:' relative'}} bg="light" expand="lg">
+        <Navbar style={{ padding: '8px 100px',position:' sticky',top:'0'}} bg="light" expand="lg">
             <Container fluid>
                 <Link style={{ textDecoration: 'none' }} to={'/'}>
                     <Navbar.Brand href="#">Logos</Navbar.Brand>
