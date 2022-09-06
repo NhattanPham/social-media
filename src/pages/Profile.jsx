@@ -7,6 +7,7 @@ import { getUserById } from '../services/auth'
 import { useParams } from "react-router-dom";
 import AddPost from '../components/AddPost'
 import EditUser from '../components/EditUser'
+import LazyLoad from 'react-lazy-load'
 
 function Profile() {
   const { user } = useSelector(state => state.auth)
@@ -37,7 +38,7 @@ function Profile() {
       })
       .catch(error => console.log(error))
   }
- 
+
   return (
     <div>
       <div className={styles['avatar_cover_img']}>
@@ -50,7 +51,7 @@ function Profile() {
           <img
             className={styles.avatar_img}
             src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
-            alt="Not found" /> 
+            alt="Not found" />
           {profile && profile ? <div><h2>{profile?.name ? profile.name : profile?.email}</h2></div> : <div><h2>{user?.name ? user.name : user?.email}</h2></div>}
         </div>
       </div>
@@ -58,13 +59,21 @@ function Profile() {
         <div className={`${styles.intro} col-md-3`}>
           <h3>Intro</h3>
           <p>Address</p>
-          <EditUser reloadPosts={handleLoadPosts}/>
-         
+          <EditUser reloadPosts={handleLoadPosts} />
+
         </div>
         <div className='d-flex flex-column col-md-6 align-items-center' align="center">
           <AddPost loadPostByUser={() => handleLoadPosts(user.id)} />
           {postsByUser && postsByUser.map((post) =>
-            <Post key={post.id} post={post} />
+            <LazyLoad
+              key={post.id}
+              offset={300}
+              height={700}
+              width={'100%'}
+              onContentVisible={() => console.log('Loadding')}
+            >
+              <Post key={post.id} post={post} />
+            </LazyLoad>
           )}
         </div>
       </div>

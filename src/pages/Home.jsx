@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Post from '../components/Post'
 import styles from './Home.module.css'
 import AddPost from '../components/AddPost'
+import LazyLoad from 'react-lazy-load'
 
 function Home() {
   const { posts } = useSelector(state => state.posts)
@@ -17,19 +18,27 @@ function Home() {
     <div className='d-flex'>
       <div className={`${styles.optionUser} col-md-3`}>
         <div className='d-flex'>
-        <img
-          style={{ width: '40px', height: '40px', borderRadius: '20px', margin: '0 20px' }}
-          src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
-          alt="No found" />
-          {user ? user?.name?<h2>{user?.name}</h2>:<h2>{user?.email}</h2>:<h2>Not Login</h2>}
-          </div>
-          <p>Friends</p>
-          <p>Save</p>
+          <img
+            style={{ width: '40px', height: '40px', borderRadius: '20px', margin: '0 20px' }}
+            src="https://anhdep123.com/wp-content/uploads/2020/11/avatar-facebook-mac-dinh-nam.jpeg"
+            alt="No found" />
+          {user ? user?.name ? <h2>{user?.name}</h2> : <h2>{user?.email}</h2> : <h2>Not Login</h2>}
+        </div>
+        <p>Friends</p>
+        <p>Save</p>
       </div>
       <div className='d-flex flex-column col-md-6 align-items-center' align="center">
-        <AddPost/>
+        <AddPost />
         {posts && posts.map(post =>
-          <Post key={post.id} post={post} />
+          <LazyLoad 
+            key={post.id}
+            offset={300}
+            height={700}
+            width={'100%'}
+            onContentVisible={() => console.log('Loadding')}
+          >
+            <Post key={post.id} post={post} />
+          </LazyLoad>
         )}
       </div>
     </div>
