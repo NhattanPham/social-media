@@ -18,7 +18,7 @@ function AddPost({ loadPostByUser }) {
         // if(imageUpload)
         dispatch(createPostAction({ userId: user.id, body: comment, thumbnail: url }))
         dispatch(loadPostsAction())
-        loadPostByUser()
+        // loadPostByUser()
 
         // setComment('')
     }
