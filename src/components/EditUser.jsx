@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { editUserAction } from '../store/auth/AuthAction';
+import {AiOutlineEdit} from 'react-icons/ai'
 function EditUser({reloadPosts}) {
     const { user } = useSelector(state => state.auth)
     const [name, setName] = useState(user?.name)
@@ -22,12 +23,12 @@ function EditUser({reloadPosts}) {
   
     return (
         <div>
-            <Button variant="primary" onClick={handleShowEdit}>
-                Edit profile
+            <Button variant="outline-primary" style={{position:'absolute',top:'20px',right:'20px'}} onClick={handleShowEdit}>
+            <AiOutlineEdit/>
             </Button>
             <Modal show={showEdit} onHide={handleCloseEdit}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Profile</Modal.Title>
+                    <Modal.Title>Edit profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <InputGroup className="mb-3">

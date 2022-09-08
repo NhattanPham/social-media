@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Profile.module.css'
 import { useSelector } from 'react-redux'
-import Post from '../components/Post'
 import { loadPostsByUser } from '../services/posts'
 import { getUserById } from '../services/auth'
 import { useParams } from "react-router-dom";
-import AddPost from '../components/AddPost'
+import Post from '../components/shared/Post'
+import AddPost from '../components/shared/AddPost'
 import EditUser from '../components/EditUser'
-import LazyLoad from 'react-lazy-load'
+import Loading from '../components/shared/Loading'
 
 function Profile() {
   const { user } = useSelector(state => state.auth)
+  // const { loadding } = useSelector(state => state.posts)
+  const [isLoading,setIsLoading] = useState(false)
   const [profile, setProfile] = useState(null)
   const [postsByUser, setPostsByUser] = useState([])
   const { id } = useParams()
@@ -30,15 +32,18 @@ function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
   const handleLoadPosts = (userId) => {
+    setIsLoading(true)
     loadPostsByUser(userId)
       .then((res) => {
         if (res.status === 200) {
+          setIsLoading(false)
           setPostsByUser(res.data)
         }
       })
       .catch(error => console.log(error))
   }
-
+  if(isLoading)
+  return (<Loading isLoading={isLoading}/>)
   return (
     <div>
       <div className={styles['avatar_cover_img']}>
@@ -56,24 +61,16 @@ function Profile() {
         </div>
       </div>
       <div className='d-flex justify-content-center'>
-        <div className={`${styles.intro} col-md-3`}>
+        <div className={`${styles.intro} col-md-3 d-none d-sm-block`}>
           <h3>Intro</h3>
-          <p><b>Address :</b> {profile ? profile?.address.city?profile?.address.city:profile?.address:user?.address}</p>
-          <p><b>Phone :</b> {profile ? profile?.phone:user?.phone}</p>
-          <EditUser reloadPosts={handleLoadPosts} />
+          <p><b>Address :</b> {profile ? profile?.address?.city?profile?.address.city:profile?.address:user?.address?user?.address:'Not update'}</p>
+          <p><b>Phone :</b> {profile ? profile?.phone:user?.phone?user?.phone:'Not update'}</p>
+          {user && user.id === parseInt(id)?<EditUser reloadPosts={handleLoadPosts} />:null}
         </div>
         <div className='d-flex flex-column col-md-6 align-items-center' align="center">
-          <AddPost loadPostByUser={() => handleLoadPosts(user.id)} />
+          <AddPost loadPostByUser={() => handleLoadPosts(user.id)} isLoading={setIsLoading}/>
           {postsByUser && postsByUser.map((post) =>
-            <LazyLoad
-              key={post.id}
-              offset={300}
-              height={700}
-              width={'100%'}
-              onContentVisible={() => console.log('Loadding')}
-            >
-              <Post key={post.id} post={post} />
-            </LazyLoad>
+              <Post key={post.id} post={post} loadPosts={()=>handleLoadPosts(user.id)}/>
           )}
         </div>
       </div>

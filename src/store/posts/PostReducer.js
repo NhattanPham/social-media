@@ -31,6 +31,12 @@ export default function postReducer(state=initvalue,{type,payload}) {
                 loadding:false,
                 posts:payload
             }
+        case types.FETCH_POST_SCROLL:
+            return{
+                ...state,
+                loadding:false,
+                posts:[...state.posts,...payload]
+            }
         case types.FETCH_POSTBYUSER_SUCCESS:
             return{
                 ...state,
@@ -38,11 +44,14 @@ export default function postReducer(state=initvalue,{type,payload}) {
                 posts:payload
             }
         case types.CREATE_POST_SUCCESS:
+            state.posts.unshift(payload)
             return{
                 ...state,
                 loadding:false,
-                posts:[...state.posts,payload]
+                posts:state.posts
             }
+        case types.RELOAD_POST:
+            return state
         default:
             return state;
     }

@@ -62,6 +62,7 @@ function NavigationBar() {
                         <Form.Control
                             type="search"
                             placeholder="Search"
+                            id={'search'}
                             className="me-2"
                             aria-label="Search"
                             onChange={(e) => handleSearch(e.target.value)}
@@ -84,7 +85,10 @@ function NavigationBar() {
                 <div className={styles.searchBox}>
                     <ul style={{ listStyle:'none',padding:'0px' }}>
                     {userFilter && userFilter.map(item=>(
-                        <li key={item.id} className={styles.searchBoxItemLi}><Link className={styles.searchBoxItem} to={`/profile/${item.id}`}>{item.name}</Link></li>
+                        <li key={item.id} className={styles.searchBoxItemLi}><Link onClick={()=>{
+                            document.getElementById('search').value = ''
+                            setUserFilter([])
+                        }} className={styles.searchBoxItem} to={`/profile/${item.id}`}>{item.name}</Link></li>
                     ))}
                     </ul>
                 </div>

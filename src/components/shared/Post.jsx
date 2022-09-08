@@ -3,29 +3,38 @@ import styles from './Post.module.css'
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai'
 import { BsChatRightText } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
-import { getLikeByuserAndPost, createLike, deleteLike } from '../services/like'
-import { getCommentByPost, createComment } from '../services/comment'
-import { useNavigate } from 'react-router-dom'
+import { deletePost } from '../../services/posts'
+import { getLikeByuserAndPost, createLike, deleteLike } from '../../services/like'
+import { getCommentByPost, createComment } from '../../services/comment'
+import { useNavigate, useParams } from 'react-router-dom'
+// import {AiOutlineEdit} from 'react-icons/ai'
+import {BsTrash} from 'react-icons/bs'
+import EditPost from '../EditPost'
 
-function Post({ post }) {
+
+function Post({ post,loadPosts }) {
   const [showComment, setShowComment] = useState(false)
   const [comments, setComments] = useState(null)
   const [likeData, setLikeData] = useState(null)
   const { user } = useSelector(state => state.auth)
   const navigate = useNavigate()
+  const {id} = useParams()
   useEffect(() => {
     if (user) {
-      getLikeByuserAndPost(post.id, user.id)
-        .then((res) => {
-          if (res.data)
-            setLikeData(res.data[0])
-        })
-        .catch(err => console.log(err))
+      handleLoadPosts()
       if (showComment)
         handleLoadComment()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, showComment])
+  const handleLoadPosts = ()=>{
+    getLikeByuserAndPost(post.id, user.id)
+        .then((res) => {
+          if (res.data)
+            setLikeData(res.data[0])
+        })
+        .catch(err => console.log(err))
+  }
   const handleLoadComment = () => {
     getCommentByPost(post.id)
       .then((res) => {
@@ -127,7 +136,15 @@ function Post({ post }) {
             </div>
           )}
         </div> : null}
-        <div className={styles['loader-line']}></div>
+        {user.id===parseInt(id)?<div className={styles.option_post}>
+          <ul className={styles.list_option}>
+            <li className={styles.list_option_item}><EditPost post={post} loadPosts={loadPosts}/></li>
+            <li className={`${styles.list_option_item} btn btn-outline-danger`} onClick={()=>{deletePost(post.id)
+            loadPosts()
+            }} ><BsTrash/></li>
+          </ul>
+        </div>:null}
+        
     </div>
   )
 }

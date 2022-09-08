@@ -1,12 +1,12 @@
 import * as types from './PostActionTypes'
 import { loadPosts,loadPostsByUser,createPost } from '../../services/posts'
 
-const loadPostsAction = ()=> async (dispatch) =>{
+const loadPostsAction = (numPage)=> async (dispatch) =>{
     try {
         dispatch({
             type:types.FETCH_POST_REQUEST
         })
-        const result = await loadPosts();
+        const result = await loadPosts(numPage);
         if(result.status===200){
             dispatch({
                 type:types.FETCH_POST_SUCCESS,
@@ -60,8 +60,30 @@ const createPostAction = (payload)=>async (dispatch)=>{
         })
     }
 }
+const loadPostsScrollAction = (numPage)=> async (dispatch) =>{
+    console.log('actoin num page',numPage)
+        const result = await loadPosts(numPage);
+        if(result.status===200){
+            dispatch({
+                type:types.FETCH_POST_SCROLL,
+                payload:result.data
+            })
+        }
+    
+}
+const reloadPostAction = (numPage)=>async (dispatch)=>{
+    const result = await loadPosts(numPage);
+    if(result.status===200){
+        dispatch({
+            type:types.RELOAD_POST,
+            payload:result.data
+        })
+    }
+}
 export {
     loadPostsAction,
     loadPostsByUserAction,
-    createPostAction
+    createPostAction,
+    loadPostsScrollAction,
+    reloadPostAction
 }

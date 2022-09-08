@@ -7,3 +7,24 @@
     position: sticky;
     top: 90px;
 }
+.list_option{
+    list-style: none;
+    padding: 0;
+}
+.list_option_item{
+    padding: 10px ;
+    font-size: 20px;
+    border-radius: 20px;
+}
+.list_option_item:hover {
+    background-color: rgb(228, 228, 228);
+    cursor: pointer;
+}
+.freind_item{
+    padding: 10px;
+    border-radius: 20px;
+}
+.freind_item:hover{
+    background-color: rgb(228, 228, 228);
+    cursor: pointer;
+}
