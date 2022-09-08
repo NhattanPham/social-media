@@ -63,8 +63,8 @@ function Profile() {
       <div className='d-flex justify-content-center'>
         <div className={`${styles.intro} col-md-3 d-none d-sm-block`}>
           <h3>Intro</h3>
-          <p><b>Address :</b> {profile ? profile?.address?.city?profile?.address.city:profile?.address:user?.address?user?.address:'Not update'}</p>
-          <p><b>Phone :</b> {profile ? profile?.phone:user?.phone?user?.phone:'Not update'}</p>
+          <p><b>Address :</b> {profile ? (profile?.address?.city?profile?.address.city:profile?.address?(profile?.address):('Not update')):(user?.address?user?.address:'Not update')}</p>
+          <p><b>Phone :</b> {profile ? (profile?.phone?(profile?.phone):'Not update'):(user?.phone?user?.phone:'Not update')}</p>
           {user && user.id === parseInt(id)?<EditUser reloadPosts={handleLoadPosts} />:null}
         </div>
         <div className='d-flex flex-column col-md-6 align-items-center' align="center">
