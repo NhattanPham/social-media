@@ -51,14 +51,13 @@ function AddPost({ loadPostByUser,isLoading }) {
             uploadTask.on(
                 "state_changed",
                 (snapshot) => {
+                    isLoading(true)
                     const persentF = Math.round(
                         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
                     )
                     
                     console.log(persentF)
-                    if(persentF>0 && persentF<100)
-                    isLoading(true)
-                    else
+                    if(persentF===100)
                     isLoading(false)
                 },
                 (err) => console.log(err),
