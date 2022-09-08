@@ -71,6 +71,16 @@ function Post({ post,loadPosts }) {
       })
       .catch(err => console.log(err))
   }
+  const handleDeletePost = (postId) =>{
+    deletePost(postId)
+    .then((res)=>{
+      if(res.status===200){
+        console.log(res.data)
+        // handleLoadPosts()
+        loadPosts()
+      }
+    })
+  }
 
   return (
     <div className={`${styles.post} col-md-12 col-xs-12 text-dark`}>
@@ -139,8 +149,8 @@ function Post({ post,loadPosts }) {
         {user.id===parseInt(id)?<div className={styles.option_post}>
           <ul className={styles.list_option}>
             <li className={styles.list_option_item}><EditPost post={post} loadPosts={loadPosts}/></li>
-            <li className={`${styles.list_option_item} btn btn-outline-danger`} onClick={()=>{deletePost(post.id)
-            loadPosts()
+            <li className={`${styles.list_option_item} btn btn-outline-danger`} onClick={()=>{handleDeletePost(post.id)
+            // loadPosts()
             }} ><BsTrash/></li>
           </ul>
         </div>:null}

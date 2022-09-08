@@ -15,7 +15,12 @@ function EditPost({post,loadPosts}) {
     const handleShowEdit = () => setShowEdit(true);
     const handleEdit = (postId,content) => {
         editPost(postId,{body:content})
-        loadPosts()
+        .then((res)=>{
+            if(res.status===200){
+                console.log(res.data)
+                loadPosts()
+            }
+        })
     }
   return (
     <div> <Button variant="outline-primary" style={{position:'absolute',top:'30px',right:'50px'}} onClick={handleShowEdit}>

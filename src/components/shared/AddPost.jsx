@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadPostsAction, createPostAction } from '../../store/posts/PostAction'
+import { createPostAction } from '../../store/posts/PostAction'
 import { BsCardImage } from 'react-icons/bs'
 import storage from '../../firebase/firebaseConfig'
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { useLocation } from 'react-router-dom'
-function AddPost({ loadPostByUser,isLoading }) {
+function AddPost({ loadPosts,loadPostByUser,isLoading }) {
     const { user } = useSelector(state => state.auth)
     const [comment, setComment] = useState('')
     const [file, setFile] = useState("")
@@ -16,7 +16,7 @@ function AddPost({ loadPostByUser,isLoading }) {
     const dispatch = useDispatch()
     const handleAddPost = (url) => {
         dispatch(createPostAction({ userId: user.id, body: comment, thumbnail: url }))
-        dispatch(loadPostsAction(1))
+        loadPosts()
         if(location.pathname!=='/')
         loadPostByUser()
 
@@ -107,6 +107,7 @@ function AddPost({ loadPostByUser,isLoading }) {
                     handleUpload()
                     setFile("")
                     setComment('')
+                    // dispatch(loadPostsAction(1))
                 }} style={{ margin: '10px', width: '80%' }}>Post</button>
 
             </div>

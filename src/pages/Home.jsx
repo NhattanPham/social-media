@@ -62,7 +62,7 @@ function Home() {
         </ul>
       </div>
       <div className='d-flex flex-column col-md-6 align-items-center' align="center">
-        <AddPost page={page} isLoading={setIsLoading} />
+        <AddPost loadPosts={()=>dispatch(loadPostsAction(1))} page={page} isLoading={setIsLoading} />
         <InfiniteScroll
           dataLength={posts.length} //This is important field to render the next data
           next={() => setPage(page + 1)}
