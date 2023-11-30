@@ -1,13 +1,12 @@
 import * as types from './PostActionTypes'
-import { loadPosts } from '../../services/posts'
+import { loadPosts,loadPostsByUser,createPost } from '../../services/posts'
 
-const loadPostsAction = ()=> async (dispatch) =>{
+const loadPostsAction = (numPage)=> async (dispatch) =>{
     try {
         dispatch({
             type:types.FETCH_POST_REQUEST
         })
-        const result = await loadPosts();
-        console.log('result posts',result)
+        const result = await loadPosts(numPage);
         if(result.status===200){
             dispatch({
                 type:types.FETCH_POST_SUCCESS,
@@ -22,6 +21,69 @@ const loadPostsAction = ()=> async (dispatch) =>{
     }
     
 }
+const loadPostsByUserAction = (userId)=> async (dispatch)=>{
+    try {
+        dispatch({
+            type:types.FETCH_POSTBYUSER_REQUEST
+        })
+        const result = await loadPostsByUser(userId)
+        if(result.status === 200){
+            dispatch({
+                type:types.FETCH_POSTBYUSER_SUCCESS,
+                payload:result.data
+            })
+        }
+    } catch (error) {
+        dispatch({
+            type:types.FETCH_POSTBYUSER_FAIL,
+            payload:error
+        })
+    }
+}
+const createPostAction = (payload)=>async (dispatch)=>{
+    try{
+        dispatch({
+            type:types.CREATE_POST_REQUEST
+        })
+        const result = await createPost(payload)
+        console.log(result)
+        if(result.status === 201){
+            dispatch({
+                type:types.CREATE_POST_SUCCESS,
+                payload:result.data
+            })
+        }
+    }catch (error) {
+        dispatch({
+            type:types.CREATE_POST_FAIL,
+            payload:error
+        })
+    }
+}
+const loadPostsScrollAction = (numPage)=> async (dispatch) =>{
+    console.log('action num page',numPage)
+        const result = await loadPosts(numPage);
+        if(result.status===200){
+            dispatch({
+                type:types.FETCH_POST_SCROLL,
+                payload:result.data
+            })
+        }
+    
+}
+const reloadPostAction = (numPage)=>async (dispatch)=>{
+    const result = await loadPosts(numPage);
+    if(result.status===200){
+        dispatch({
+            type:types.RELOAD_POST,
+            payload:result.data
+        })
+    }
+}
 export {
-    loadPostsAction
+    loadPostsAction,
+    loadPostsByUserAction,
+    createPostAction,
+    loadPostsScrollAction,
+    reloadPostAction
 }

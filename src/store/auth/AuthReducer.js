@@ -8,6 +8,14 @@ const initvalue = {
 
 }
 export default function authReducer(state=initvalue,{type,payload}){
+    if(localStorage.getItem('user')){
+        return{
+            ...state,
+            loading:false,
+            user:JSON.parse(localStorage.getItem('user')),
+            error:null
+        }
+    }
     switch (type) {
         case types.LOGIN_FAIL:
         case types.REGISTER_FAIL:
@@ -18,8 +26,11 @@ export default function authReducer(state=initvalue,{type,payload}){
             }
         case types.LOGIN_REQUEST:
         case types.REGISTER_REQUEST:
-        case types.LOGOUT:
-            return initvalue;
+            return {
+                ...state,
+                loading:false,
+                error:null
+            }
         case types.LOGIN_SUCCESS:
             return{
                 ...state,
@@ -32,6 +43,8 @@ export default function authReducer(state=initvalue,{type,payload}){
                 loading:true,
                 registerSuccess:true
             }
+        case types.LOGOUT:
+            return initvalue
         default:
             return state;
     }
