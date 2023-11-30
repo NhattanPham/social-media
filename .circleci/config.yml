@@ -28,12 +28,8 @@ jobs:
       - run:
           name: "Deploy app to Firebase Hosting"
           command: "./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN"
-workflows:
-  sample: #This is the name of the workflows, feel free to change it to better match your workflow
     
   build_and_deploy:
     jobs:
       - build
-      - node/test:
-                version: '16.10'
-                pkg-manager: npm
+      
