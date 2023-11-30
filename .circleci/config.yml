@@ -1,5 +1,4 @@
 version: 2.1
-
 jobs:
   build:
     docker:
@@ -25,11 +24,7 @@ jobs:
       - run:
           name: Build React App
           command: npm run build
-      - run:
-          name: "Deploy app to Firebase Hosting"
-          command: "./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN"
-    
+workflows:
   build_and_deploy:
     jobs:
       - build
-      
