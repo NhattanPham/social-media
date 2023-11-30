@@ -16,7 +16,7 @@ function AddPost({ loadPosts,loadPostByUser,isLoading }) {
     const dispatch = useDispatch()
     const handleAddPost = (url) => {
         dispatch(createPostAction({ userId: user.id, body: comment, thumbnail: url }))
-        loadPosts()
+        // loadPosts()
         if(location.pathname!=='/')
         loadPostByUser()
 

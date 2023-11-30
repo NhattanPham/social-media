@@ -61,7 +61,7 @@ const createPostAction = (payload)=>async (dispatch)=>{
     }
 }
 const loadPostsScrollAction = (numPage)=> async (dispatch) =>{
-    console.log('actoin num page',numPage)
+    console.log('action num page',numPage)
         const result = await loadPosts(numPage);
         if(result.status===200){
             dispatch({

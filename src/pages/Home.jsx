@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { loadPostsAction, loadPostsScrollAction, reloadPostAction } from '../store/posts/PostAction'
+import { loadPostsAction, loadPostsScrollAction } from '../store/posts/PostAction'
 import { useDispatch, useSelector } from 'react-redux'
 import Post from '../components/shared/Post'
 import styles from './Home.module.css'
@@ -20,13 +20,13 @@ function Home() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadPostsAction(1))
-    reloadPostAction()
+    // reloadPostAction()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
     if (page !== 1)
       dispatch(loadPostsScrollAction(page))
-    reloadPostAction()
+    // reloadPostAction()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 

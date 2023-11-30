@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_POINT = 'https://db-socialmedia-tan.herokuapp.com/api'
+const API_POINT = 'https://social-media-api-tuu9.onrender.com/api'
 // const API_POINT = 'http://localhost:3005/api'
 
 const getToken=()=>{

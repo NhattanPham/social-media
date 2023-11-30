@@ -15,7 +15,7 @@ import styles from './NavigationBar.module.css'
 function NavigationBar() {
     const { user } = useSelector(state => state.auth)
     const [users, setUsers] = useState([])
-    const [userFilter,setUserFilter] = useState([])
+    const [userFilter, setUserFilter] = useState([])
     const dispatch = useDispatch()
     const navigate = useNavigate()
     // console.log("user", user)
@@ -29,28 +29,34 @@ function NavigationBar() {
                 if (res.status === 200)
                     setUsers(res.data)
             })
-            .catch(error=>console.log(error))
-    },[])
+            .catch(error => console.log(error))
+    }, [])
     const handleSearch = (params) => {
         // const userFilter = users.filter((item)=>item?.name.toLowerCase().includes(params))
-        if(params!==''){
-        const userFilterF = users.filter((item)=>{
-            if(item.name)
-            return item?.name.toLowerCase().includes(params.toLowerCase())
-            else return false
-        }
+        if (params !== '') {
+            const userFilterF = users.filter((item) => {
+                if (item.name)
+                    return item?.name.toLowerCase().includes(params.toLowerCase())
+                else return false
+            }
             )
-        setUserFilter(userFilterF)
-    }else{
-        setUserFilter([])
-    }
+            setUserFilter(userFilterF)
+        } else {
+            setUserFilter([])
+        }
     }
     // console.log('User',user)
     return (
-        <Navbar style={{ padding: '8px 100px',position:' sticky',top:'0',zIndex:'999'}} bg="light" expand="lg">
+        <Navbar style={{  position: ' sticky', top: '0', zIndex: '999' }} bg="light" expand="lg">
             <Container fluid>
                 <Link style={{ textDecoration: 'none' }} to={'/'}>
-                    <Navbar.Brand href="#">Logos</Navbar.Brand>
+                    <Navbar.Brand href="#">
+                        <img
+                            style={{width:'50px'}}
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
+                            alt="Not Found"
+                        />
+                    </Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
@@ -71,7 +77,7 @@ function NavigationBar() {
 
                     </Nav>
                     <div className='d-flex p-2 align-items-center'>
-                        {user && <div ><Link to={`/profile/${user.id}`} style={{ color: '#000', textDecoration: 'none', padding: '0 20px' }}>{user.name?user.name:user.email}</Link></div>}
+                        {user && <div ><Link to={`/profile/${user.id}`} style={{ color: '#000', textDecoration: 'none', padding: '0 20px' }}>{user.name ? user.name : user.email}</Link></div>}
 
                         {user !== null ? (<Form className="d-flex">
                             <Button variant="outline-primary" onClick={handleLogout}>Logout</Button>
@@ -83,13 +89,13 @@ function NavigationBar() {
                     </div>
                 </Navbar.Collapse>
                 <div className={styles.searchBox}>
-                    <ul style={{ listStyle:'none',padding:'0px' }}>
-                    {userFilter && userFilter.map(item=>(
-                        <li key={item.id} className={styles.searchBoxItemLi}><Link onClick={()=>{
-                            document.getElementById('search').value = ''
-                            setUserFilter([])
-                        }} className={styles.searchBoxItem} to={`/profile/${item.id}`}>{item.name}</Link></li>
-                    ))}
+                    <ul style={{ listStyle: 'none', padding: '0px' }}>
+                        {userFilter && userFilter.map(item => (
+                            <li key={item.id} className={styles.searchBoxItemLi}><Link onClick={() => {
+                                document.getElementById('search').value = ''
+                                setUserFilter([])
+                            }} className={styles.searchBoxItem} to={`/profile/${item.id}`}>{item.name}</Link></li>
+                        ))}
                     </ul>
                 </div>
             </Container>
