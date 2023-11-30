@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-   - node: circle/node@4.7
-
 jobs:
   build:
     docker:
